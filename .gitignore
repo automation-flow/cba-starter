@@ -1,0 +1,34 @@
+# Source data, never sync (holds your real emails/docs).
+# Ship the empty Capture folders (so the structure matches), ignore their contents.
+raw/*
+!raw/.gitkeep
+!raw/transcripts/
+raw/transcripts/*
+!raw/transcripts/.gitkeep
+!raw/transcripts/example-call.md
+!raw/emails/
+raw/emails/*
+!raw/emails/.gitkeep
+!raw/documents/
+raw/documents/*
+!raw/documents/.gitkeep
+
+# Secrets, never commit
+.env
+*.token
+*-token.env
+.mcp.json
+
+# Codex MCP config may hold tokens — keep the .example, ignore the real one
+.codex/config.toml
+
+# Pull-script state (per machine)
+scripts/.last-pull-*
+
+# Obsidian local state (keep plugin config, drop workspace + cache)
+.obsidian/workspace*.json
+.obsidian/cache
+.obsidian/.DS_Store
+
+# Generated wiki health report
+wiki/_health.md

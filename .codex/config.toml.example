@@ -1,0 +1,36 @@
+# Codex MCP connectors for this brain — the "live window" path.
+#
+# Copy this file to ONE of:
+#   ~/.codex/config.toml      (global — all your projects)
+#   .codex/config.toml        (this project only; the project must be trusted)
+# Then authenticate each server with a browser sign-in:
+#   codex mcp login <server-name>
+#
+# This is the Codex equivalent of Claude Code's connector directory. Most tools
+# connect with OAuth over streamable HTTP — no API key to paste, no OAuth app to
+# create. Find a connector's server URL in its own docs or an MCP directory.
+
+# --- Google Drive (read your docs live) ---
+[mcp_servers.google_drive]
+url = "https://<google-drive-mcp-server-url>"   # paste the real URL from the connector's docs
+# After adding, authenticate:  codex mcp login google_drive
+
+# --- Gmail ---
+# [mcp_servers.gmail]
+# url = "https://<gmail-mcp-server-url>"
+
+# --- Google Calendar ---
+# [mcp_servers.google_calendar]
+# url = "https://<calendar-mcp-server-url>"
+
+# If an OAuth provider needs a fixed callback port or a specific redirect URL,
+# set these at the top level (uncomment and adjust):
+# mcp_oauth_callback_port = 1455
+# mcp_oauth_callback_url  = "http://localhost:1455/callback"
+
+# Rare: a server that uses a bearer token instead of OAuth. Read it from an env
+# var — never hardcode a secret in this file (and keep .codex/config.toml out of
+# git; this repo already ignores it).
+# [mcp_servers.example]
+# url = "https://<server-url>"
+# bearer_token_env_var = "EXAMPLE_TOKEN"
