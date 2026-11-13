@@ -14,9 +14,9 @@ When you encounter any of these situations, capture the learning using `/learn`:
 If you notice a recurring pattern or a non-obvious fix during your work, proactively suggest running `/learn` to capture it. Say something like: "I noticed [pattern]. Want me to `/learn` this so it's captured for future sessions?"
 
 ### Promotion path
-Learnings start in the project's `docs/learnings/LEARNINGS.md`. When a learning is confirmed across multiple sessions or projects, it should be promoted:
+Learnings start in the project's `LEARNINGS.md` at the repo root (the golden-path location; older repos may still keep it at `docs/learnings/LEARNINGS.md`). When a learning is confirmed across multiple sessions or projects, it should be promoted:
 
-1. **Project learning** → stays in project's `docs/learnings/`
+1. **Project learning** → stays in the project's `LEARNINGS.md`
 2. **Type learning** → added to `_shared/{type}/rules/` → synced to all projects of that type
 3. **Universal learning** → added to `_shared/common/rules/` → synced to all projects
 

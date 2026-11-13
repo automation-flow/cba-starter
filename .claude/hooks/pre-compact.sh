@@ -9,20 +9,25 @@ STATUS_FILE="$PROJECT_DIR/CURRENT_STATUS.md"
 DRIVE_CONFIG="$PROJECT_DIR/.drive.json"
 DRIVE_SCRIPT=""
 
-for candidate in \
-  "$(cd "$PROJECT_DIR" && git rev-parse --show-toplevel 2>/dev/null)/scripts/drive-sync.py" \
-  "$(cd "$PROJECT_DIR/../.." 2>/dev/null && pwd)/scripts/drive-sync.py" \
-  "$(cd "$PROJECT_DIR/../../.." 2>/dev/null && pwd)/scripts/drive-sync.py"; do
-  if [ -f "$candidate" ]; then
-    DRIVE_SCRIPT="$candidate"
+# drive-sync.py runs only from the framework root: the nearest of this repo,
+# its parent or grandparent that carries workspace.json, with the script owned
+# by this user and writable by nobody else. A project repo's own copy never runs.
+trusted_script() {
+  [ -f "$1" ] && [ -O "$1" ] && [ -z "$(find "$1" \( -perm -020 -o -perm -002 \) 2>/dev/null)" ]
+}
+
+REPO_ROOT="$(cd "$PROJECT_DIR" && git rev-parse --show-toplevel 2>/dev/null)"
+for root in "$REPO_ROOT" "$(cd "$PROJECT_DIR/../.." 2>/dev/null && pwd)" "$(cd "$PROJECT_DIR/../../.." 2>/dev/null && pwd)"; do
+  if [ -n "$root" ] && [ -f "$root/workspace.json" ] && trusted_script "$root/scripts/drive-sync.py"; then
+    DRIVE_SCRIPT="$root/scripts/drive-sync.py"
     break
   fi
 done
 
 if [ -f "$DRIVE_CONFIG" ] && [ -n "$DRIVE_SCRIPT" ]; then
-  ENABLED=$(python3 -c "import json; print(json.load(open('$DRIVE_CONFIG')).get('enabled', False))" 2>/dev/null)
+  ENABLED=$(cd / && python3 -I -c 'import json, sys; print(json.load(open(sys.argv[1])).get("enabled", False))' "$DRIVE_CONFIG" 2>/dev/null)
   if [ "$ENABLED" = "True" ]; then
-    python3 "$DRIVE_SCRIPT" push --project-dir "$PROJECT_DIR" 2>/dev/null || true
+    python3 -I "$DRIVE_SCRIPT" push --project-dir "$PROJECT_DIR" 2>/dev/null || true
   fi
 fi
 # --- End Drive sync ---

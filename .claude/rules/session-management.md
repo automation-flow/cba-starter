@@ -17,3 +17,21 @@
   only when the tree is clean. When it is blocked it records the offending files
   in `.git/af-sync-status.json` rather than working around them. Read that file
   before asking why a checkout is behind.
+
+## Unattended sessions (agent server, Remote Control, cloud)
+
+Promoted 2026-11-03 from the agent server on srv1021081.
+
+- When the user is away, a question in the app blocks the session until they
+  answer. Pick the sensible option, record the decision and the alternative in
+  `CURRENT_STATUS.md`, and keep going. Ask only when a wrong guess is costly or
+  irreversible: production data, money, anything sent to a client.
+- A message starting `[context-handoff]` comes from the context hook
+  (`scripts/server-agents/context-handoff.py`). At the warning, push work in
+  progress to its branch, update `CURRENT_STATUS.md`, and write the handoff file
+  it names: project path, branch, the task in the user's words, what is done,
+  exact next steps, open decisions. When it says a new session took over, stop
+  and make no further changes.
+- Large attachments from the Claude app can fail to upload (an 18MB PDF did).
+  When the user reports a failed upload, ask for a Drive link or have the file
+  copied into the session's `inbox/` folder instead.

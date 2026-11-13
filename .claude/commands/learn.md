@@ -38,7 +38,7 @@ Determine the type:
 
 And the scope:
 - `project` — specific to this project only
-- `type` — relevant to all projects of this type (n8n or fullstack)
+- `type` — relevant to all projects of this type (fullstack, say)
 - `universal` — relevant to all projects
 
 ### 3. Save the learning

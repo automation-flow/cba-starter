@@ -20,10 +20,6 @@ If the task involves existing components:
 - Run validation if applicable
 - Understand what exists before planning changes
 
-For n8n projects specifically:
-- Fetch the workflow with the workflow-reader agent or `n8n_get_workflow` (mode=structure)
-- Run workflow validation if relevant
-
 ### 3. Create the plan
 Write a plan file to `docs/plans/PLAN-<short-name>.md` with this structure:
 
